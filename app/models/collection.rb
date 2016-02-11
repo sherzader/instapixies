@@ -11,4 +11,11 @@
 #
 
 class Collection < ActiveRecord::Base
+  validates :start_date, :end_date, presence: true
+  before_create :ensure_valid_period
+
+  def ensure_valid_period
+    self.start_date <= self.end_date
+  end
+
 end
