@@ -4,8 +4,9 @@ class CreateCollections < ActiveRecord::Migration
       t.string :hashtag, null: false
       t.datetime :start_date, null: false
       t.datetime :end_date, null: false
-      t.text :media, array: true, default: []
       t.timestamps null: false
     end
+
+    add_index :collections, :hashtag
   end
 end
