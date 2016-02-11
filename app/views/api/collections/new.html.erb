@@ -1,11 +1,12 @@
-<h1>Search Instagram photos with a #!</h1>
+<h1>Search Instagram photos by #!</h1>
 <br>
 <form action="<%= api_collections_url %>" method="post">
+  <%= auth_token %>
   <div class="form-group">
     <label for="collection_start_date">Start Date</label>
     <br>
     <input
-      type="datetime"
+      type="datetime-local"
       name="collection[start_date]"
       value="<%= @collection.start_date %>"
       id="collection_start_date">
@@ -14,7 +15,7 @@
     <label for="user_email">End Date</label>
     <br>
     <input
-      type="datetime"
+      type="datetime-local"
       name="collection[end_date]"
       value="<%= @collection.end_date %>"
       id="collection_end_date">
