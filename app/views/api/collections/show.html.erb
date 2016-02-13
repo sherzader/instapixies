@@ -1,4 +1,20 @@
-<h1>Collections for #</h1>
-<% @collection.instaitems.each do |ig_item| %>
-  <%= ig_item.username %>
+<h1>Collections for #<%= @collection.hashtag %></h1>
+<!-- <% @collection.instaitems.each do |item| %>
+  <img src="<%= item.image %>" width=306 height=306 /><br />
+<% end %> -->
+<ul id="og-grid" class="og-grid">
+
+<% @collection.instaitems.each do |instagram| %>
+
+	<li>
+		<a href="<%= instagram.link %>" data-largesrc="<%= instagram.image %>" data-title="@<%= instagram.username %>" data-description="">
+      <img src="<%= instagram.image %>" width=306 height=306 />
+		</a>
+	</li>
+
 <% end %>
+</ul>
+
+
+<p id="centerButton"><button id="loadmore" class="btn btn-lg btn-default" data-next-id="<%= @next_max_tag_id %>">Load more</button></p>
+<!-- pretty cool button -->
