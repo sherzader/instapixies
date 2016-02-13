@@ -6,6 +6,8 @@ gem 'newrelic_rpm'
 gem 'httparty'
 #to view schema in model
 gem 'annotate'
+#to parse json data
+gem 'json'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.5'
 # Use postgresql as the database for Active Record

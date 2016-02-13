@@ -11,20 +11,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160211025652) do
+ActiveRecord::Schema.define(version: 20160213013017) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "collections", force: :cascade do |t|
-    t.string   "hashtag",                 null: false
-    t.datetime "start_date",              null: false
-    t.datetime "end_date",                null: false
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
-    t.text     "media",      default: [],              array: true
+    t.string   "hashtag",    null: false
+    t.datetime "start_date", null: false
+    t.datetime "end_date",   null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_index "collections", ["hashtag"], name: "index_collections_on_hashtag", using: :btree
+
+  create_table "instaitems", force: :cascade do |t|
+    t.string   "image",         null: false
+    t.datetime "created_time",  null: false
+    t.string   "username",      null: false
+    t.string   "link",          null: false
+    t.integer  "collection_id", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
 
 end

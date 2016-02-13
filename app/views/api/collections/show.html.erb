@@ -1,2 +1,4 @@
 <h1>Collections for #</h1>
-<%= @resp %>
+<% @collection.instaitems.each do |ig_item| %>
+  <%= ig_item.username %>
+<% end %>

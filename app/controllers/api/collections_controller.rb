@@ -15,15 +15,26 @@ class Api::CollectionsController < ApplicationController
       #fetch instagram media matching created collection's hashtag query
       url = 'https://api.instagram.com/v1/tags/' + @collection.hashtag + '/media/recent?access_token=' + ACCESS_TOKEN
       resp = HTTParty.get(url)
+      # for pagination loading more content
+      @next_max_tag_id = resp["pagination"]["next_max_tag_id"]
+
       # filter fetched ig data for objects during time period
       filtered_media = resp['data'].select do |resp_item|
         # convert ig created_time's unix format to datetime
-        DateTime.strptime(resp_item['created_time'], '%s')
+        DateTime.strptime(resp_item['caption']['created_time'], '%s')
                 .between?(@collection.start_date, @collection.end_date)
       end
 
-      @collection.media = filtered_media
-      @collection.save
+      filtered_media.each do |ig_item|
+        instaitem = Instaitem.new(
+          username: ig_item["user"]["username"],
+          link: ig_item["link"],
+          created_time: DateTime.strptime(ig_item["caption"]["created_time"], '%s'),
+          image: ig_item["images"]["standard_resolution"]["url"],
+          collection_id: @collection.id
+        )
+        instaitem.save!
+      end
 
       render :show
     else
@@ -38,7 +49,7 @@ class Api::CollectionsController < ApplicationController
 
   private
   def collection_params
-    params.require(:collection).permit(:start_date, :end_date, :hashtag, :media)
+    params.require(:collection).permit(:start_date, :end_date, :hashtag)
   end
 
 end
