@@ -12,4 +12,7 @@
 !/log/.keep
 /tmp
 
-./node_modules
+/config/application.yml
+node_modules
+bundle.js
+bundle.js.map
