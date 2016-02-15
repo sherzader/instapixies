@@ -5,9 +5,11 @@
 <ul id="og-grid" class="og-grid">
 
 <% @collection.instaitems.each do |instagram| %>
-
 	<li>
-		<a href="<%= instagram.link %>" data-largesrc="<%= instagram.image %>" data-title="@<%= instagram.username %>" data-description="">
+		<a href="<%= instagram.link %>"
+			 data-largesrc="<%= instagram.image %>"
+			 data-title="@<%= instagram.username %>"
+			 data-description="<%=instagram.created_time.strftime("%A, %B %e, %Y")%>, <%=instagram.created_time.strftime("%l:%M %p")%>">
       <img src="<%= instagram.image %>" width=306 height=306 />
 		</a>
 	</li>

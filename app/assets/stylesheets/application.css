@@ -14,21 +14,21 @@
  *= require_self
  */
  .og-grid {
- 	list-style: none;
- 	padding: 20px 0;
- 	margin: 0 auto;
- 	text-align: center;
- 	width: 100%;
- }
+	list-style: none;
+	padding: 20px 0;
+	margin: 0 auto;
+	text-align: center;
+	width: 100%;
+}
 
- .og-grid li {
- 	display: inline-block;
- 	margin: 10px 5px 0 5px;
- 	vertical-align: top;
- 	height: 250px;
- }
+.og-grid li {
+	display: inline-block;
+	margin: 10px 5px 0 5px;
+	vertical-align: top;
+	height: 250px;
+}
 
- .og-grid li > a,
+.og-grid li > a,
 .og-grid li > a img {
 	border: none;
 	outline: none;
@@ -84,16 +84,29 @@
 	top: 50%;
 	height: 1px;
 	background: #888;
+	-webkit-transform: rotate(45deg);
+	-moz-transform: rotate(45deg);
 	transform: rotate(45deg);
 }
 
 .og-close::after {
+	-webkit-transform: rotate(-45deg);
+	-moz-transform: rotate(-45deg);
 	transform: rotate(-45deg);
 }
 
 .og-close:hover::before,
 .og-close:hover::after {
 	background: #333;
+}
+
+.og-fullimg,
+.og-details {
+	width: 50%;
+	float: left;
+	height: 100%;
+	overflow: hidden;
+	position: relative;
 }
 
 .og-details {
@@ -158,7 +171,49 @@
 	top: 50%;
 	left: 50%;
 	margin: -25px 0 0 -25px;
+	-webkit-animation: loader 0.5s infinite ease-in-out both;
+	-moz-animation: loader 0.5s infinite ease-in-out both;
 	animation: loader 0.5s infinite ease-in-out both;
+}
+
+#loadmore {
+	background-color: #2ecc71;
+	color: #fff;
+	padding: 15px 20px;
+	border: none;
+	font-size: 18px;
+	outline: 0;
+	cursor: pointer;
+}
+
+#loadmore:hover {
+	opacity: 0.7;
+}
+
+input[type="text"] {
+	padding: 8px;
+	font-size: 16px;
+	font-family: inherit !important;
+	font-weight: 100;
+	margin-top: 40px;
+	width: 300px;
+	outline: 0;
+	border: 1px solid rgba(0,0,0,0.2);
+}
+input[type="text"]:focus, input[type="text"]:active {
+	border: 1px solid #3498db;
+}
+
+@-webkit-keyframes loader {
+	0% { background: #ddd; }
+	33% { background: #ccc; box-shadow: 0 0 1px #ccc, 15px 30px 1px #ccc, -15px 30px 1px #ddd; }
+	66% { background: #ccc; box-shadow: 0 0 1px #ccc, 15px 30px 1px #ddd, -15px 30px 1px #ccc; }
+}
+
+@-moz-keyframes loader {
+	0% { background: #ddd; }
+	33% { background: #ccc; box-shadow: 0 0 1px #ccc, 15px 30px 1px #ccc, -15px 30px 1px #ddd; }
+	66% { background: #ccc; box-shadow: 0 0 1px #ccc, 15px 30px 1px #ddd, -15px 30px 1px #ccc; }
 }
 
 @keyframes loader {
@@ -180,4 +235,118 @@
 	.og-fullimg { display: none; }
 	.og-details { float: none; width: 100%; }
 
+}
+
+@import url(http://fonts.googleapis.com/css?family=Lato:300,400,700);
+
+html { height: 100%; }
+
+*,
+*:after,
+*:before {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+}
+
+/* Clearfix hack by Nicolas Gallagher: http://nicolasgallagher.com/micro-clearfix-hack/ */
+.clearfix:before,
+.clearfix:after {
+    content: " ";
+    display: table;
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+.clearfix {
+    *zoom: 1;
+}
+
+body {
+    font-family: 'Lato', Calibri, Arial, sans-serif;
+    background: #f9f9f9;
+    font-weight: 300;
+    font-size: 15px;
+    color: #333;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+a {
+	color: #555;
+	text-decoration: none;
+}
+
+.container {
+	width: 100%;
+	position: relative;
+}
+
+.container > header {
+	width: 90%;
+	max-width: 1240px;
+	margin: 0 auto;
+	position: relative;
+	padding: 0 30px 50px 30px;
+}
+
+.container > header {
+	padding: 60px 30px 50px;
+	text-align: center;
+}
+
+.container > header h1 {
+	font-size: 34px;
+	line-height: 38px;
+	margin: 0 auto;
+	font-weight: 700;
+	color: #333;
+}
+
+.container > header h1 span {
+	display: block;
+	font-size: 20px;
+	font-weight: 300;
+}
+
+.main > p {
+	text-align: center;
+	padding: 50px 20px;
+}
+
+/* Header Style */
+.codrops-top {
+	line-height: 24px;
+	font-size: 11px;
+	background: #fff;
+	background: rgba(255, 255, 255, 0.5);
+	text-transform: uppercase;
+	z-index: 9999;
+	position: relative;
+	box-shadow: 1px 0px 2px rgba(0,0,0,0.2);
+}
+
+.codrops-top a {
+	padding: 0px 10px;
+	letter-spacing: 1px;
+	color: #333;
+	display: inline-block;
+}
+
+.codrops-top a:hover {
+	background: rgba(255,255,255,0.8);
+	color: #000;
+}
+
+.codrops-top span.right {
+	float: right;
+}
+
+.codrops-top span.right a {
+	float: left;
+	display: block;
 }
