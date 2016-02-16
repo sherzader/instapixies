@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 20160216030153) do
     t.integer  "collection_id", null: false
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
-    t.string   "type",          null: false
+    t.string   "media_type",    null: false
   end
 
 end

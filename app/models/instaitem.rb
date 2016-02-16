@@ -10,7 +10,7 @@
 #  collection_id :integer          not null
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
-#  type          :string           not null
+#  media_type    :string           not null
 #
 
 class Instaitem < ActiveRecord::Base

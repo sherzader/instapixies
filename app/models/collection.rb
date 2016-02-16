@@ -10,9 +10,10 @@
 #  updated_at      :datetime         not null
 #  next_max_tag_id :string
 #
+require 'httparty'
 
 class Collection < ActiveRecord::Base
-  validates :start_date, :end_date, presence: true
+  validates :start_date, :end_date, :hashtag, presence: true
   before_create :ensure_valid_period
 
   has_many :instaitems
@@ -22,8 +23,9 @@ class Collection < ActiveRecord::Base
   end
 
   def fetchMorePhotos
-    var endpoint = 'https://api.instagram.com/v1/tags/' + tag + '/media/recent?access_token=246422734.1677ed0.0c261b7ae36041fd94f0864cb4a0baaf';
+    url = 'https://api.instagram.com/v1/tags/' + self.hashtag + '/media/recent?access_token=' + ENV['ACCESS_TOKEN'] + '&max_tag_id=' + self.next_max_tag_id
 
+    HTTParty.get(url)
   end
 
 end
