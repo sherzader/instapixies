@@ -24389,13 +24389,10 @@
 	  },
 	  render: function () {
 	    var tag = "";
-	    var instaitems = [];
 	    if (this.state.instaitems.length > 0) {
 	      tag = this.state.hashtag;
-	      state_igs = this.state.instaitems;
-	      for (var i = state_igs.length - 20; i < state_igs.length; i++) {
-	        var ig_item = this.state.instaitems[i];
-	        instaitems.push(React.createElement(
+	      var instaitems = this.state.instaitems.map(function (ig_item) {
+	        return React.createElement(
 	          "li",
 	          { key: ig_item.id },
 	          React.createElement(
@@ -24406,8 +24403,8 @@
 	              "data-description": (ig_item.created_date, ig_item.created_time) },
 	            React.createElement("img", { src: ig_item.image, width: "306", height: "306" })
 	          )
-	        ));
-	      }
+	        );
+	      });
 	    }
 	
 	    return React.createElement(

@@ -34,21 +34,18 @@ var showCollection = React.createClass({
   },
   render: function () {
     var tag = "";
-    var instaitems = [];
     if (this.state.instaitems.length > 0){
       tag = this.state.hashtag;
-      state_igs = this.state.instaitems;
-      for (var i = state_igs.length - 20; i < state_igs.length; i++){
-        var ig_item = this.state.instaitems[i];
-        instaitems.push(<li key={ig_item.id}>
+      var instaitems = this.state.instaitems.map(function(ig_item){
+        return(<li key={ig_item.id}>
           <a href={ig_item.link}
              data-largesrc={ig_item.image}
              data-title={ig_item.username}
              data-description={ig_item.created_date, ig_item.created_time}>
              <img src={ig_item.image} width="306" height="306" />
           </a>
-       </li>);
-      }
+        </li>);
+      });
     }
 
     return (

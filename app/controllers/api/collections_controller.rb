@@ -49,7 +49,7 @@ class Api::CollectionsController < ApplicationController
   def update
     @collection = Collection.find(params[:id])
     resp = @collection.fetchMorePhotos
-    @collection.update_attribute(next_max_tag_id: resp['pagination']['next_max_tag_id'])
+    @collection.update(next_max_tag_id: resp['pagination']['next_max_tag_id'])
 
     filtered_media = resp['data'].select do |resp_item|
       # convert ig created_time's unix format to datetime
