@@ -1,8 +1,9 @@
 var React = require('react');
 var LinkedStateMixin = require('react-addons-linked-state-mixin');
+var History = require('react-router').History;
 
 var collectionForm = React.createClass({
-  mixins: [LinkedStateMixin],
+  mixins: [LinkedStateMixin, History],
 
   blankAttrs: {
     start_date: '',
@@ -15,62 +16,52 @@ var collectionForm = React.createClass({
   },
   createCollection: function (e) {
     e.preventDefault();
-    var collection = this.state;
+    var that = this;
 
     $.ajax({
       url: "api/collections",
       type: "POST",
-      success: function (query) {
-        ApiActions.receiveAllUsersGroups(query);
-       }
+      data: { collection: this.state },
+      success: function (payload) {
+        that.history.push("/show/" + payload.id);
+      }
      });
-  },
-  fetchCollection: function () {
-    $.ajax({
-      url: "api/collections/" + collection.id,
-      type: "GET",
-      success: function (query) {
-        ApiActions.receiveAllUsersGroups(query);
-       }
-     });
+
+    this.setState(this.blankAttrs);
   },
   render: function(){
     return (
       <div>
       <h1>Search Instagram photos by #!</h1>
-      <br>
-      <form action="<%= api_collections_url %>" method="post">
-        <%= auth_token %>
-        <div class="form-group">
-          <label for="collection_start_date">Start Date</label>
-          <br>
+      <br />
+      <form onSubmit={this.createCollection}>
+        <div className="form-group">
+          <label htmlFor="collection_start_date">Start Date</label>
+          <br />
           <input
             type="datetime-local"
-            name="collection[start_date]"
-            value="<%= @collection.start_date %>"
-            id="collection_start_date">
+            valueLink={this.linkState("start_date")}
+            id="collection_start_date" />
         </div>
-        <div class="form-group">
-          <label for="user_email">End Date</label>
-          <br>
+        <div className="form-group">
+          <label htmlFor="collection_end_date">End Date</label>
+            <br />
           <input
             type="datetime-local"
-            name="collection[end_date]"
-            value="<%= @collection.end_date %>"
-            id="collection_end_date">
+            valueLink={this.linkState("end_date")}
+            id="collection_end_date" />
         </div>
-        <div class="form-group">
-          <label for="collection_hashtag">Hashtag</label>
-          <br>
+        <br />
+        <div className="form-group">
+          <label htmlFor="collection_hashtag">Hashtag</label>
           <input
             type="text"
-            name="collection[hashtag]"
-            value="<%= @collection.hashtag %>"
-            id="collection_hashtag">
+            valueLink={this.linkState("hashtag")}
+            id="collection_hashtag" />
         </div>
-          <input type="submit" value="Find tagged photos!">
+          <input type="submit" value="Find tagged photos!" />
       </form>
-      <br>
+      <br />
       </div>
     );
   }

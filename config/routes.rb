@@ -3,5 +3,5 @@ Rails.application.routes.draw do
     resources :collections, only: [:create, :new, :show]
   end
 
-  root to: "api/collections#new"
+  root to: "static_pages#root"
 end

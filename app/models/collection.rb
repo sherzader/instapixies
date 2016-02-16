@@ -8,7 +8,7 @@
 #  end_date        :datetime         not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
-#  next_max_tag_id :string           not null
+#  next_max_tag_id :string
 #
 
 class Collection < ActiveRecord::Base

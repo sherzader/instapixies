@@ -48,6 +48,9 @@
 	var ReactDOM = __webpack_require__(158);
 	var Router = __webpack_require__(159).Router;
 	var Route = __webpack_require__(159).Route;
+	var IndexRoute = __webpack_require__(159).IndexRoute;
+	var collectionForm = __webpack_require__(206);
+	var showCollection = __webpack_require__(211);
 	
 	var App = React.createClass({
 	  displayName: 'App',
@@ -56,15 +59,26 @@
 	    return React.createElement(
 	      'div',
 	      null,
-	      'hello world!'
+	      this.props.children
 	    );
 	  }
 	});
 	
+	var routes = React.createElement(
+	  Route,
+	  { path: '/', component: App },
+	  React.createElement(IndexRoute, { component: collectionForm }),
+	  React.createElement(Route, { path: 'show/:id', component: showCollection })
+	);
+	
 	document.addEventListener("DOMContentLoaded", function () {
 	  var root = document.getElementById('main');
 	  if (root) {
-	    ReactDOM.render(React.createElement(App, null), root);
+	    ReactDOM.render(React.createElement(
+	      Router,
+	      null,
+	      routes
+	    ), root);
 	  }
 	});
 
@@ -24001,6 +24015,414 @@
 	
 	exports['default'] = useBasename;
 	module.exports = exports['default'];
+
+/***/ },
+/* 206 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var LinkedStateMixin = __webpack_require__(207);
+	var History = __webpack_require__(159).History;
+	
+	var collectionForm = React.createClass({
+	  displayName: 'collectionForm',
+	
+	  mixins: [LinkedStateMixin, History],
+	
+	  blankAttrs: {
+	    start_date: '',
+	    end_date: '',
+	    hashtag: ''
+	  },
+	
+	  getInitialState: function () {
+	    return this.blankAttrs;
+	  },
+	  createCollection: function (e) {
+	    e.preventDefault();
+	    var that = this;
+	
+	    $.ajax({
+	      url: "api/collections",
+	      type: "POST",
+	      data: { collection: this.state },
+	      success: function (payload) {
+	        that.history.push("/show/" + payload.id);
+	      }
+	    });
+	
+	    this.setState(this.blankAttrs);
+	  },
+	  render: function () {
+	    return React.createElement(
+	      'div',
+	      null,
+	      React.createElement(
+	        'h1',
+	        null,
+	        'Search Instagram photos by #!'
+	      ),
+	      React.createElement('br', null),
+	      React.createElement(
+	        'form',
+	        { onSubmit: this.createCollection },
+	        React.createElement(
+	          'div',
+	          { className: 'form-group' },
+	          React.createElement(
+	            'label',
+	            { htmlFor: 'collection_start_date' },
+	            'Start Date'
+	          ),
+	          React.createElement('br', null),
+	          React.createElement('input', {
+	            type: 'datetime-local',
+	            valueLink: this.linkState("start_date"),
+	            id: 'collection_start_date' })
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'form-group' },
+	          React.createElement(
+	            'label',
+	            { htmlFor: 'collection_end_date' },
+	            'End Date'
+	          ),
+	          React.createElement('br', null),
+	          React.createElement('input', {
+	            type: 'datetime-local',
+	            valueLink: this.linkState("end_date"),
+	            id: 'collection_end_date' })
+	        ),
+	        React.createElement('br', null),
+	        React.createElement(
+	          'div',
+	          { className: 'form-group' },
+	          React.createElement(
+	            'label',
+	            { htmlFor: 'collection_hashtag' },
+	            'Hashtag'
+	          ),
+	          React.createElement('input', {
+	            type: 'text',
+	            valueLink: this.linkState("hashtag"),
+	            id: 'collection_hashtag' })
+	        ),
+	        React.createElement('input', { type: 'submit', value: 'Find tagged photos!' })
+	      ),
+	      React.createElement('br', null)
+	    );
+	  }
+	});
+	
+	module.exports = collectionForm;
+
+/***/ },
+/* 207 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__(208);
+
+/***/ },
+/* 208 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright 2013-2015, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @providesModule LinkedStateMixin
+	 * @typechecks static-only
+	 */
+	
+	'use strict';
+	
+	var ReactLink = __webpack_require__(209);
+	var ReactStateSetters = __webpack_require__(210);
+	
+	/**
+	 * A simple mixin around ReactLink.forState().
+	 */
+	var LinkedStateMixin = {
+	  /**
+	   * Create a ReactLink that's linked to part of this component's state. The
+	   * ReactLink will have the current value of this.state[key] and will call
+	   * setState() when a change is requested.
+	   *
+	   * @param {string} key state key to update. Note: you may want to use keyOf()
+	   * if you're using Google Closure Compiler advanced mode.
+	   * @return {ReactLink} ReactLink instance linking to the state.
+	   */
+	  linkState: function (key) {
+	    return new ReactLink(this.state[key], ReactStateSetters.createStateKeySetter(this, key));
+	  }
+	};
+	
+	module.exports = LinkedStateMixin;
+
+/***/ },
+/* 209 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright 2013-2015, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @providesModule ReactLink
+	 * @typechecks static-only
+	 */
+	
+	'use strict';
+	
+	/**
+	 * ReactLink encapsulates a common pattern in which a component wants to modify
+	 * a prop received from its parent. ReactLink allows the parent to pass down a
+	 * value coupled with a callback that, when invoked, expresses an intent to
+	 * modify that value. For example:
+	 *
+	 * React.createClass({
+	 *   getInitialState: function() {
+	 *     return {value: ''};
+	 *   },
+	 *   render: function() {
+	 *     var valueLink = new ReactLink(this.state.value, this._handleValueChange);
+	 *     return <input valueLink={valueLink} />;
+	 *   },
+	 *   _handleValueChange: function(newValue) {
+	 *     this.setState({value: newValue});
+	 *   }
+	 * });
+	 *
+	 * We have provided some sugary mixins to make the creation and
+	 * consumption of ReactLink easier; see LinkedValueUtils and LinkedStateMixin.
+	 */
+	
+	var React = __webpack_require__(2);
+	
+	/**
+	 * @param {*} value current value of the link
+	 * @param {function} requestChange callback to request a change
+	 */
+	function ReactLink(value, requestChange) {
+	  this.value = value;
+	  this.requestChange = requestChange;
+	}
+	
+	/**
+	 * Creates a PropType that enforces the ReactLink API and optionally checks the
+	 * type of the value being passed inside the link. Example:
+	 *
+	 * MyComponent.propTypes = {
+	 *   tabIndexLink: ReactLink.PropTypes.link(React.PropTypes.number)
+	 * }
+	 */
+	function createLinkTypeChecker(linkType) {
+	  var shapes = {
+	    value: typeof linkType === 'undefined' ? React.PropTypes.any.isRequired : linkType.isRequired,
+	    requestChange: React.PropTypes.func.isRequired
+	  };
+	  return React.PropTypes.shape(shapes);
+	}
+	
+	ReactLink.PropTypes = {
+	  link: createLinkTypeChecker
+	};
+	
+	module.exports = ReactLink;
+
+/***/ },
+/* 210 */
+/***/ function(module, exports) {
+
+	/**
+	 * Copyright 2013-2015, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @providesModule ReactStateSetters
+	 */
+	
+	'use strict';
+	
+	var ReactStateSetters = {
+	  /**
+	   * Returns a function that calls the provided function, and uses the result
+	   * of that to set the component's state.
+	   *
+	   * @param {ReactCompositeComponent} component
+	   * @param {function} funcReturningState Returned callback uses this to
+	   *                                      determine how to update state.
+	   * @return {function} callback that when invoked uses funcReturningState to
+	   *                    determined the object literal to setState.
+	   */
+	  createStateSetter: function (component, funcReturningState) {
+	    return function (a, b, c, d, e, f) {
+	      var partialState = funcReturningState.call(component, a, b, c, d, e, f);
+	      if (partialState) {
+	        component.setState(partialState);
+	      }
+	    };
+	  },
+	
+	  /**
+	   * Returns a single-argument callback that can be used to update a single
+	   * key in the component's state.
+	   *
+	   * Note: this is memoized function, which makes it inexpensive to call.
+	   *
+	   * @param {ReactCompositeComponent} component
+	   * @param {string} key The key in the state that you should update.
+	   * @return {function} callback of 1 argument which calls setState() with
+	   *                    the provided keyName and callback argument.
+	   */
+	  createStateKeySetter: function (component, key) {
+	    // Memoize the setters.
+	    var cache = component.__keySetters || (component.__keySetters = {});
+	    return cache[key] || (cache[key] = createStateKeySetter(component, key));
+	  }
+	};
+	
+	function createStateKeySetter(component, key) {
+	  // Partial state is allocated outside of the function closure so it can be
+	  // reused with every call, avoiding memory allocation when this function
+	  // is called.
+	  var partialState = {};
+	  return function stateKeySetter(value) {
+	    partialState[key] = value;
+	    component.setState(partialState);
+	  };
+	}
+	
+	ReactStateSetters.Mixin = {
+	  /**
+	   * Returns a function that calls the provided function, and uses the result
+	   * of that to set the component's state.
+	   *
+	   * For example, these statements are equivalent:
+	   *
+	   *   this.setState({x: 1});
+	   *   this.createStateSetter(function(xValue) {
+	   *     return {x: xValue};
+	   *   })(1);
+	   *
+	   * @param {function} funcReturningState Returned callback uses this to
+	   *                                      determine how to update state.
+	   * @return {function} callback that when invoked uses funcReturningState to
+	   *                    determined the object literal to setState.
+	   */
+	  createStateSetter: function (funcReturningState) {
+	    return ReactStateSetters.createStateSetter(this, funcReturningState);
+	  },
+	
+	  /**
+	   * Returns a single-argument callback that can be used to update a single
+	   * key in the component's state.
+	   *
+	   * For example, these statements are equivalent:
+	   *
+	   *   this.setState({x: 1});
+	   *   this.createStateKeySetter('x')(1);
+	   *
+	   * Note: this is memoized function, which makes it inexpensive to call.
+	   *
+	   * @param {string} key The key in the state that you should update.
+	   * @return {function} callback of 1 argument which calls setState() with
+	   *                    the provided keyName and callback argument.
+	   */
+	  createStateKeySetter: function (key) {
+	    return ReactStateSetters.createStateKeySetter(this, key);
+	  }
+	};
+	
+	module.exports = ReactStateSetters;
+
+/***/ },
+/* 211 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	
+	var showCollection = React.createClass({
+	  displayName: "showCollection",
+	
+	  getInitialState: function () {
+	    return { instaitems: [], hashtag: "", next_max_tag_id: "" };
+	  },
+	  componentWillMount: function () {
+	    var that = this;
+	
+	    $.ajax({
+	      url: "api/collections/" + this.props.params.id,
+	      type: "GET",
+	      success: function (payload) {
+	        that.setState({
+	          instaitems: payload.instaitems,
+	          hashtag: payload.hashtag,
+	          next_max_tag_id: payload.next_max_tag_id
+	        });
+	      }
+	    });
+	  },
+	  render: function () {
+	    if (this.state.instaitems.length > 0) {
+	      var instaitems = this.state.instaitems.map(function (ig_item) {
+	        return React.createElement(
+	          "li",
+	          { key: ig_item.id },
+	          React.createElement(
+	            "a",
+	            { href: ig_item.link,
+	              "data-largesrc": ig_item.image,
+	              "data-title": ig_item.username,
+	              "data-description": (ig_item.created_date, ig_item.created_time) },
+	            React.createElement("img", { src: ig_item.image, width: "306", height: "306" })
+	          )
+	        );
+	      });
+	    }
+	
+	    return React.createElement(
+	      "div",
+	      null,
+	      React.createElement(
+	        "h1",
+	        null,
+	        "Collections for #",
+	        this.state.hashtag
+	      ),
+	      React.createElement(
+	        "ul",
+	        { id: "og-grid", className: "og-grid" },
+	        instaitems
+	      ),
+	      React.createElement(
+	        "p",
+	        { id: "centerButton" },
+	        React.createElement(
+	          "button",
+	          {
+	            id: "loadmore",
+	            className: "btn btn-lg btn-default",
+	            "data-next-id": parseInt(this.state.next_max_tag_id) },
+	          "Load more"
+	        )
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = showCollection;
 
 /***/ }
 /******/ ]);

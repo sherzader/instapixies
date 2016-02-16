@@ -16,7 +16,7 @@ class Api::CollectionsController < ApplicationController
       url = 'https://api.instagram.com/v1/tags/' + @collection.hashtag + '/media/recent?access_token=' + ACCESS_TOKEN
       resp = HTTParty.get(url)
       # for pagination loading more content
-      @next_max_tag_id = resp["pagination"]["next_max_tag_id"]
+      @collection.next_max_tag_id = resp["pagination"]["next_max_tag_id"]
 
       # filter fetched ig data for objects during time period
       filtered_media = resp['data'].select do |resp_item|
