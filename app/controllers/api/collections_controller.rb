@@ -2,8 +2,6 @@ class Api::CollectionsController < ApplicationController
   require 'date'
   require 'httparty'
 
-  ACCESS_TOKEN = "246422734.1677ed0.0c261b7ae36041fd94f0864cb4a0baaf"
-
   def show
     @collection = Collection.find(params[:id])
   end
@@ -13,11 +11,11 @@ class Api::CollectionsController < ApplicationController
 
     if @collection.save
       #fetch instagram media matching created collection's hashtag query
-      url = 'https://api.instagram.com/v1/tags/' + @collection.hashtag + '/media/recent?access_token=' + ACCESS_TOKEN
+      url = 'https://api.instagram.com/v1/tags/' + @collection.hashtag + '/media/recent?access_token=' + ENV['ACCESS_TOKEN']
       resp = HTTParty.get(url)
       # for pagination loading more content
       @collection.next_max_tag_id = resp["pagination"]["next_max_tag_id"]
-
+      @collection.save!
       # filter fetched ig data for objects during time period
       filtered_media = resp['data'].select do |resp_item|
         # convert ig created_time's unix format to datetime
@@ -41,6 +39,14 @@ class Api::CollectionsController < ApplicationController
       #add error messages for invalid start and end date
       render json: @collection.errors.full_messages, status: 422
     end
+  end
+
+  def update
+    @collection = Collection.find(params[:id])
+    @collection.fetchMorePhotos
+
+    @collection.update()
+
   end
 
   def new
