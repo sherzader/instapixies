@@ -8,7 +8,7 @@ I made two models to display Instagram's media. I wanted the user to make a coll
 
 - [x] Security feature: Instagram access token git-ignored and placed in an environment variable
 - [x] Collection model and Instaitem model is a _one has many_ relationship
-- [x] Makes a GET request to Instagram's API to fetch photos/videos
+- [x] Makes a HTTP GET request to Instagram's API to fetch photos/videos using Ruby gem HTTParty
 - [x] Pagination using next_max_tag_id which updates on client-side request
 
 ###Frontend:
@@ -20,6 +20,7 @@ This is a single page web app made possible by the Javascript framework React. T
 - [x] CSS styling for responsive and minimalist UI design
 
 ###To-do:
+- [ ] User authentication to save collections in user's session
 - [ ] Build a robust, fault tolerant backend: saving a collection when the server dies, minimize API calls to prevent rate limit
 - [ ] Browse button
 - [ ] More user-friendly html form fields for start and end dates 
