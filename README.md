@@ -20,8 +20,8 @@ This is a single page web app made possible by the Javascript framework React. T
 * CSS styling for responsive and minimalist UI design
 
 ###To-do:
-[] Build a robust, fault tolerant backend: saving a collection when the server dies, minimize API calls to prevent rate limit
-[] Browse button
-[] More user-friendly html form fields for start and end dates 
-[] Expanding view for Instagram items
-[] Infinite scroll
+- [] Build a robust, fault tolerant backend: saving a collection when the server dies, minimize API calls to prevent rate limit
+- [] Browse button
+- [] More user-friendly html form fields for start and end dates 
+- [] Expanding view for Instagram items
+- [] Infinite scroll
