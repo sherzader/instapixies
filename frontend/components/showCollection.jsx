@@ -38,10 +38,6 @@ var showCollection = React.createClass({
   returnToNewForm: function () {
     this.history.push('/');
   },
-  toggleVideo: function (ig) {
-    var vid = ReactDOM.findDOMNode(this.refs.video);
-    vid.play();
-  },
   render: function () {
     var that = this;
     var tag = "";
@@ -52,22 +48,19 @@ var showCollection = React.createClass({
         if (ig_item.media_type == "image") {
           return(
             <li key={ig_item.id}>
-            <div link={ig_item.link}
-               data-largesrc={ig_item.image}
-               data-title={ig_item.username}
-               data-description={ig_item.created_date, ig_item.created_time}>
+            <div className="no-caption caption">
+               <a href={ig_item.link}>@{ig_item.username}</a><br></br>
+               {ig_item.created_date}, {ig_item.created_time}
              </div>
              <img src={ig_item.image} width="306" height="306" alt="instagram" />
             </li>);
         }else {
-          var boundToggle = that.toggleVideo.bind(null, ig_item);
           return(
             <li key={ig_item.id}>
-            <div link={ig_item.link}
-               data-largesrc={ig_item.image}
-               data-title={ig_item.username}
-               data-description={ig_item.created_date, ig_item.created_time}>
-             </div>
+              <div className="no-caption caption">
+                <a href={ig_item.link}>@{ig_item.username}</a><br></br>
+                {ig_item.created_date}, {ig_item.created_time}
+              </div>
                <video src={ig_item.image} autoPlay></video>
             </li>);
         }

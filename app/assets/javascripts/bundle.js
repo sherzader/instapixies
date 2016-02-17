@@ -24056,12 +24056,7 @@
 	  render: function () {
 	    return React.createElement(
 	      'div',
-	      null,
-	      React.createElement(
-	        'h1',
-	        null,
-	        'Search Instagram photos by #!'
-	      ),
+	      { className: 'collec-form' },
 	      React.createElement('br', null),
 	      React.createElement(
 	        'form',
@@ -24394,10 +24389,6 @@
 	  returnToNewForm: function () {
 	    this.history.push('/');
 	  },
-	  toggleVideo: function (ig) {
-	    var vid = ReactDOM.findDOMNode(this.refs.video);
-	    vid.play();
-	  },
 	  render: function () {
 	    var that = this;
 	    var tag = "";
@@ -24409,21 +24400,40 @@
 	          return React.createElement(
 	            'li',
 	            { key: ig_item.id },
-	            React.createElement('div', { link: ig_item.link,
-	              'data-largesrc': ig_item.image,
-	              'data-title': ig_item.username,
-	              'data-description': (ig_item.created_date, ig_item.created_time) }),
+	            React.createElement(
+	              'div',
+	              { className: 'no-caption caption' },
+	              React.createElement(
+	                'a',
+	                { href: ig_item.link },
+	                '@',
+	                ig_item.username
+	              ),
+	              React.createElement('br', null),
+	              ig_item.created_date,
+	              ', ',
+	              ig_item.created_time
+	            ),
 	            React.createElement('img', { src: ig_item.image, width: '306', height: '306', alt: 'instagram' })
 	          );
 	        } else {
-	          var boundToggle = that.toggleVideo.bind(null, ig_item);
 	          return React.createElement(
 	            'li',
 	            { key: ig_item.id },
-	            React.createElement('div', { link: ig_item.link,
-	              'data-largesrc': ig_item.image,
-	              'data-title': ig_item.username,
-	              'data-description': (ig_item.created_date, ig_item.created_time) }),
+	            React.createElement(
+	              'div',
+	              { className: 'no-caption caption' },
+	              React.createElement(
+	                'a',
+	                { href: ig_item.link },
+	                '@',
+	                ig_item.username
+	              ),
+	              React.createElement('br', null),
+	              ig_item.created_date,
+	              ', ',
+	              ig_item.created_time
+	            ),
 	            React.createElement('video', { src: ig_item.image, autoPlay: true })
 	          );
 	        }

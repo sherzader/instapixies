@@ -31,8 +31,7 @@ var collectionForm = React.createClass({
   },
   render: function(){
     return (
-      <div>
-      <h1>Search Instagram photos by #!</h1>
+      <div className="collec-form">
       <br />
       <form onSubmit={this.createCollection}>
         <div className="form-group">
