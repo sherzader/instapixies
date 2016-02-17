@@ -5,6 +5,7 @@ json.instaitems(@collection.instaitems) do |ig_item|
 	json.username ig_item.username
 	json.image ig_item.image
 	json.link ig_item.link
+  json.media_type ig_item.media_type
 	json.created_date ig_item.created_time.strftime("%A, %B %e, %Y")
 	json.created_time ig_item.created_time.strftime("%l:%M %p")
 end

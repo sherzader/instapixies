@@ -52,14 +52,14 @@ var collectionForm = React.createClass({
             id="collection_end_date" />
         </div>
         <br />
-        <div className="form-group">
-          <label htmlFor="collection_hashtag">Hashtag</label>
+        <div>
+          <label htmlFor="collection_hashtag">Hashtag</label><br />
           <input
             type="text"
             valueLink={this.linkState("hashtag")}
             id="collection_hashtag" />
         </div>
-          <input type="submit" value="Find tagged photos!" />
+          <input id="newcollec" type="submit" value="Find tagged photos!" />
       </form>
       <br />
       </div>

@@ -13,6 +13,11 @@
  *= require_tree .
  *= require_self
  */
+ .og-grid li > video {
+  width: 306px;
+  height: 306px;
+ }
+
  .og-grid {
 	list-style: none;
 	padding: 20px 0;
@@ -47,56 +52,6 @@
 	border-width: 15px;
 	left: 50%;
 	margin: -20px 0 0 -15px;
-}
-
-.og-expander {
-	position: absolute;
-	background: #ddd;
-	top: auto;
-	left: 0;
-	width: 100%;
-	margin-top: 10px;
-	text-align: left;
-	height: 0;
-	overflow: hidden;
-}
-
-.og-expander-inner {
-	padding: 50px 30px;
-	height: 100%;
-}
-
-.og-close {
-	position: absolute;
-	width: 40px;
-	height: 40px;
-	top: 20px;
-	right: 20px;
-	cursor: pointer;
-}
-
-.og-close::before,
-.og-close::after {
-	content: '';
-	position: absolute;
-	width: 100%;
-	top: 50%;
-	height: 1px;
-	background: #888;
-	-webkit-transform: rotate(45deg);
-	-moz-transform: rotate(45deg);
-	transform: rotate(45deg);
-}
-
-.og-close::after {
-	-webkit-transform: rotate(-45deg);
-	-moz-transform: rotate(-45deg);
-	transform: rotate(-45deg);
-}
-
-.og-close:hover::before,
-.og-close:hover::after {
-	background: #333;
 }
 
 .og-fullimg,
@@ -186,7 +141,22 @@
 }
 
 #loadmore:hover {
-	opacity: 0.7;
+  opacity: 0.7;
+}
+
+#newcollec {
+  background-color: #8080ff;
+  margin-left: 10px;
+	color: #fff;
+	padding: 15px 20px;
+	border: none;
+	font-size: 18px;
+	outline: 0;
+	cursor: pointer;
+}
+
+#newcollec:hover {
+  opacity: 0.7;
 }
 
 input[type="text"] {
@@ -194,7 +164,7 @@ input[type="text"] {
 	font-size: 16px;
 	font-family: inherit !important;
 	font-weight: 100;
-	margin-top: 40px;
+	margin-bottom: 40px;
 	width: 300px;
 	outline: 0;
 	border: 1px solid rgba(0,0,0,0.2);
@@ -261,7 +231,6 @@ body {
     font-size: 15px;
     color: #333;
     overflow: scroll;
-    overflow-x: hidden;
 }
 
 a {

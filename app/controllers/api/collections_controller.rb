@@ -42,6 +42,7 @@ class Api::CollectionsController < ApplicationController
       render :show
     else
       #add error messages for invalid start and end date
+      flash[:errors] = ["Start date must occur before end date"]
       render json: @collection.errors.full_messages, status: 422
     end
   end

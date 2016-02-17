@@ -24097,18 +24097,19 @@
 	        React.createElement('br', null),
 	        React.createElement(
 	          'div',
-	          { className: 'form-group' },
+	          null,
 	          React.createElement(
 	            'label',
 	            { htmlFor: 'collection_hashtag' },
 	            'Hashtag'
 	          ),
+	          React.createElement('br', null),
 	          React.createElement('input', {
 	            type: 'text',
 	            valueLink: this.linkState("hashtag"),
 	            id: 'collection_hashtag' })
 	        ),
-	        React.createElement('input', { type: 'submit', value: 'Find tagged photos!' })
+	        React.createElement('input', { id: 'newcollec', type: 'submit', value: 'Find tagged photos!' })
 	      ),
 	      React.createElement('br', null)
 	    );
@@ -24352,10 +24353,13 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
+	var ReactDOM = __webpack_require__(158);
+	var History = __webpack_require__(159).History;
 	
 	var showCollection = React.createClass({
-	  displayName: "showCollection",
+	  displayName: 'showCollection',
 	
+	  mixins: [History],
 	  getInitialState: function () {
 	    return { instaitems: [], hashtag: "", next_max_tag_id: "" };
 	  },
@@ -24387,51 +24391,77 @@
 	      }
 	    });
 	  },
+	  returnToNewForm: function () {
+	    this.history.push('/');
+	  },
+	  toggleVideo: function (ig) {
+	    var vid = ReactDOM.findDOMNode(this.refs.video);
+	    vid.play();
+	  },
 	  render: function () {
+	    var that = this;
 	    var tag = "";
+	
 	    if (this.state.instaitems.length > 0) {
 	      tag = this.state.hashtag;
 	      var instaitems = this.state.instaitems.map(function (ig_item) {
-	        return React.createElement(
-	          "li",
-	          { key: ig_item.id },
-	          React.createElement(
-	            "a",
-	            { href: ig_item.link,
-	              "data-largesrc": ig_item.image,
-	              "data-title": ig_item.username,
-	              "data-description": (ig_item.created_date, ig_item.created_time) },
-	            React.createElement("img", { src: ig_item.image, width: "306", height: "306" })
-	          )
-	        );
+	        if (ig_item.media_type == "image") {
+	          return React.createElement(
+	            'li',
+	            { key: ig_item.id },
+	            React.createElement('div', { link: ig_item.link,
+	              'data-largesrc': ig_item.image,
+	              'data-title': ig_item.username,
+	              'data-description': (ig_item.created_date, ig_item.created_time) }),
+	            React.createElement('img', { src: ig_item.image, width: '306', height: '306', alt: 'instagram' })
+	          );
+	        } else {
+	          var boundToggle = that.toggleVideo.bind(null, ig_item);
+	          return React.createElement(
+	            'li',
+	            { key: ig_item.id },
+	            React.createElement('div', { link: ig_item.link,
+	              'data-largesrc': ig_item.image,
+	              'data-title': ig_item.username,
+	              'data-description': (ig_item.created_date, ig_item.created_time) }),
+	            React.createElement('video', { src: ig_item.image, autoPlay: true })
+	          );
+	        }
 	      });
 	    }
 	
 	    return React.createElement(
-	      "div",
+	      'div',
 	      null,
 	      React.createElement(
-	        "h1",
+	        'h1',
 	        null,
-	        "Collections for #",
+	        'Collections for #',
 	        this.state.hashtag
 	      ),
 	      React.createElement(
-	        "ul",
-	        { id: "og-grid", className: "og-grid" },
+	        'ul',
+	        { id: 'og-grid', className: 'og-grid' },
 	        instaitems
 	      ),
 	      React.createElement(
-	        "p",
-	        { id: "centerButton" },
+	        'p',
+	        { id: 'centerButton' },
 	        React.createElement(
-	          "button",
+	          'button',
 	          {
-	            id: "loadmore",
+	            id: 'loadmore',
 	            onClick: this.updateCollection,
-	            className: "btn btn-lg btn-default",
-	            "data-next-id": parseInt(this.state.next_max_tag_id) },
-	          "Load more"
+	            className: 'btn btn-lg btn-default' },
+	          'Load more'
+	        ),
+	        React.createElement(
+	          'button',
+	          {
+	            id: 'newcollec',
+	            onClick: this.returnToNewForm,
+	            className: 'btn btn-lg btn-default' },
+	          'New Collection'
 	        )
 	      )
 	    );
