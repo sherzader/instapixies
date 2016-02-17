@@ -1,4 +1,4 @@
-[Live](http://www.instapixies.herokuapp.com)
+#[Live](http://instapixies.herokuapp.com)
 
 #Instapixies
 ##A full stack web app built on Ruby on Rails, ReactJS, and jQuery
