@@ -24400,6 +24400,7 @@
 	          return React.createElement(
 	            'li',
 	            { key: ig_item.id },
+	            React.createElement('img', { src: ig_item.image, width: '306', height: '306', alt: 'instagram' }),
 	            React.createElement(
 	              'div',
 	              { className: 'no-caption caption' },
@@ -24413,13 +24414,13 @@
 	              ig_item.created_date,
 	              ', ',
 	              ig_item.created_time
-	            ),
-	            React.createElement('img', { src: ig_item.image, width: '306', height: '306', alt: 'instagram' })
+	            )
 	          );
 	        } else {
 	          return React.createElement(
 	            'li',
 	            { key: ig_item.id },
+	            React.createElement('video', { src: ig_item.image, autoPlay: true }),
 	            React.createElement(
 	              'div',
 	              { className: 'no-caption caption' },
@@ -24433,8 +24434,7 @@
 	              ig_item.created_date,
 	              ', ',
 	              ig_item.created_time
-	            ),
-	            React.createElement('video', { src: ig_item.image, autoPlay: true })
+	            )
 	          );
 	        }
 	      });

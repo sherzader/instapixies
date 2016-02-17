@@ -30,14 +30,7 @@
 	display: inline-block;
 	margin: 10px;
 	height: 310px;
-}
-
-.og-grid li > a,
-.og-grid li > a img {
-	border: none;
-	outline: none;
-	display: block;
-	position: relative;
+  margin-top: 40px;
 }
 
 div.no-caption {
@@ -47,100 +40,12 @@ div.no-caption {
 div.caption {
   font-family: 'Roboto', sans-serif;
   font-size: 15px;
+  border-bottom: 1px solid;
+  border-color: #e0ebeb;
 }
 
 div.caption > a {
   background-color: yellow;
-}
-
-.og-grid li.og-expanded > a::after {
-	top: auto;
-	border: solid transparent;
-	content: " ";
-	height: 0;
-	width: 0;
-	position: absolute;
-	pointer-events: none;
-	border-bottom-color: #ddd;
-	border-width: 15px;
-	left: 50%;
-	margin: -20px 0 0 -15px;
-}
-
-.og-fullimg,
-.og-details {
-	width: 50%;
-	float: left;
-	height: 100%;
-	overflow: hidden;
-	position: relative;
-}
-
-.og-details {
-	padding: 0 40px 0 20px;
-}
-
-.og-fullimg {
-	text-align: center;
-}
-
-.og-fullimg img {
-	display: inline-block;
-	max-height: 100%;
-	max-width: 100%;
-}
-
-.og-details h3 {
-	font-weight: 300;
-	font-size: 52px;
-	padding: 40px 0 10px;
-	margin-bottom: 10px;
-}
-
-.og-details p {
-	font-weight: 400;
-	font-size: 16px;
-	line-height: 22px;
-	color: #999;
-}
-
-.og-details a {
-	font-weight: 700;
-	font-size: 16px;
-	color: #333;
-	text-transform: uppercase;
-	letter-spacing: 2px;
-	padding: 10px 20px;
-	border: 3px solid #333;
-	display: inline-block;
-	margin: 30px 0 0;
-	outline: none;
-}
-
-.og-details a::before {
-	content: '\2192';
-	display: inline-block;
-	margin-right: 10px;
-}
-
-.og-details a:hover {
-	border-color: #999;
-	color: #999;
-}
-
-.og-loading {
-	width: 20px;
-	height: 20px;
-	border-radius: 50%;
-	background: #ddd;
-	box-shadow: 0 0 1px #ccc, 15px 30px 1px #ccc, -15px 30px 1px #ccc;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	margin: -25px 0 0 -25px;
-	-webkit-animation: loader 0.5s infinite ease-in-out both;
-	-moz-animation: loader 0.5s infinite ease-in-out both;
-	animation: loader 0.5s infinite ease-in-out both;
 }
 
 #loadmore {
@@ -172,7 +77,7 @@ div.caption > a {
 }
 
 input[type="datetime-local"] {
-  width: 150px;
+  width: 200px;
 }
 
 input[type="text"] {
@@ -182,7 +87,7 @@ input[type="text"] {
 	font-family: inherit !important;
 	font-weight: 100;
 	margin-bottom: 40px;
-	width: 150px;
+	width: 200px;
 	outline: 0;
 	border: 1px solid rgba(0,0,0,0.2);
 }
@@ -190,37 +95,10 @@ input[type="text"]:focus, input[type="text"]:active {
 	border: 1px solid #3498db;
 }
 
-@-webkit-keyframes loader {
-	0% { background: #ddd; }
-	33% { background: #ccc; box-shadow: 0 0 1px #ccc, 15px 30px 1px #ccc, -15px 30px 1px #ddd; }
-	66% { background: #ccc; box-shadow: 0 0 1px #ccc, 15px 30px 1px #ddd, -15px 30px 1px #ccc; }
-}
-
-@-moz-keyframes loader {
-	0% { background: #ddd; }
-	33% { background: #ccc; box-shadow: 0 0 1px #ccc, 15px 30px 1px #ccc, -15px 30px 1px #ddd; }
-	66% { background: #ccc; box-shadow: 0 0 1px #ccc, 15px 30px 1px #ddd, -15px 30px 1px #ccc; }
-}
-
-@keyframes loader {
-	0% { background: #ddd; }
-	33% { background: #ccc; box-shadow: 0 0 1px #ccc, 15px 30px 1px #ccc, -15px 30px 1px #ddd; }
-	66% { background: #ccc; box-shadow: 0 0 1px #ccc, 15px 30px 1px #ddd, -15px 30px 1px #ccc; }
-}
-
 @media screen and (max-width: 830px) {
-
-	.og-expander h3 { font-size: 32px; }
-	.og-expander p { font-size: 13px; }
-	.og-expander a { font-size: 12px; }
-
 }
 
 @media screen and (max-width: 650px) {
-
-	.og-fullimg { display: none; }
-	.og-details { float: none; width: 100%; }
-
 }
 
 @import url(http://fonts.googleapis.com/css?family=Roboto:300,400,700);

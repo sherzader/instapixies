@@ -48,20 +48,20 @@ var showCollection = React.createClass({
         if (ig_item.media_type == "image") {
           return(
             <li key={ig_item.id}>
-            <div className="no-caption caption">
-               <a href={ig_item.link}>@{ig_item.username}</a><br></br>
-               {ig_item.created_date}, {ig_item.created_time}
+              <img src={ig_item.image} width="306" height="306" alt="instagram" />
+              <div className="no-caption caption">
+                <a href={ig_item.link}>@{ig_item.username}</a><br></br>
+                {ig_item.created_date}, {ig_item.created_time}
              </div>
-             <img src={ig_item.image} width="306" height="306" alt="instagram" />
             </li>);
         }else {
           return(
             <li key={ig_item.id}>
+              <video src={ig_item.image} autoPlay></video>
               <div className="no-caption caption">
                 <a href={ig_item.link}>@{ig_item.username}</a><br></br>
                 {ig_item.created_date}, {ig_item.created_time}
               </div>
-               <video src={ig_item.image} autoPlay></video>
             </li>);
         }
       });
