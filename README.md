@@ -6,6 +6,7 @@
 ###Backend:
 I made two models to display Instagram's media. I wanted the user to make a collection that has many Instagram items. The data is stored in a PostgreSQL database. Upon creating a collection on the frontend, a GET request is issued to Instagram's API using the user's hashtag input in the frontend form. The endpoint for this call is fetching from Instagram's recent media. The response data contains at most 20 media objects. They are filtered for the start and end date's the user created on the frontend form. Instagram uses a UNIX timestamp format. Rails uses the datetime format, similar to the html input type's datetime-local format used on the frontend form. So I chose to convert the UNIX timestamp to datetime using Ruby's `Datetime.strptime(date, '%s')`. Then each is made into a new Instaitem object. This all happens in the Collection controller. I did not see a need for allocating a controller to the Instaitem seeing how there is an association for Collection and Instaitems declared in both of their models. The models contain the appropriate Active Record validations as well. To fetch the next 20 photos, I used the Collection's update action in the controller to make a GET request to Instagram's API for media after the `next_max_tag_id` saved from the initial response object. I then reset the `next_max_tag_id`, needed for this pagination to continue. The process from here is similar to the create action. I have one Rails view, a json.jbuilder file for showing a collection. This is how the frontend displays the data in the database. The show view extracts the Collection and its Instaitems association for internal API calls from the frontend.
 
+* Security feature: Instagram access token git-ignored and placed in an environment variable
 * Collection model and Instaitem model is a _one has many_ relationship
 * Makes a GET request to Instagram's API to fetch photos/videos
 * Pagination using next_max_tag_id which updates on client-side request
@@ -17,3 +18,10 @@ This is a single page web app made possible by the Javascript framework React. T
 * React routes for root `/` and show collection `/show/:id`
 * jQuery AJAX requests for processing internal API calls to Rails routes in order to receive database records.
 * CSS styling for responsive and minimalist UI design
+
+###To-do:
+[] Build a robust, fault tolerant backend: saving a collection when the server dies, minimize API calls to prevent rate limit
+[] Browse button
+[] More user-friendly html form fields for start and end dates 
+[] Expanding view for Instagram items
+[] Infinite scroll
