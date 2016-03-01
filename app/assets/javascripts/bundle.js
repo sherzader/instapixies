@@ -24021,6 +24021,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
+	var ReactDOM = __webpack_require__(158);
 	var LinkedStateMixin = __webpack_require__(207);
 	var History = __webpack_require__(159).History;
 	
@@ -24085,6 +24086,7 @@
 	          ),
 	          React.createElement('br', null),
 	          React.createElement('input', {
+	            ref: 'end_date',
 	            type: 'datetime-local',
 	            valueLink: this.linkState("end_date"),
 	            id: 'collection_end_date' })

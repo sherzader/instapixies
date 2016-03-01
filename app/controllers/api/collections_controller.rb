@@ -1,6 +1,5 @@
 class Api::CollectionsController < ApplicationController
   require 'date'
-  require 'httparty'
 
   def show
     @collection = Collection.find(params[:id])
@@ -17,11 +16,12 @@ class Api::CollectionsController < ApplicationController
       @collection.next_max_tag_id = resp['pagination']['next_max_tag_id']
       @collection.save!
       # filter fetched ig data for objects during time period
-      filtered_media = resp['data'].select do |resp_item|
-        # convert ig created_time's unix format to datetime
-        DateTime.strptime(resp_item['caption']['created_time'], '%s')
-                .between?(@collection.start_date, @collection.end_date)
-      end
+      # filtered_media = resp['data'].select do |resp_item|
+      #   # convert ig created_time's unix format to datetime
+      #   DateTime.strptime(resp_item['caption']['created_time'], '%s')
+      #           .between?(@collection.start_date, @collection.end_date)
+      # end
+      filtered_media = resp['data']
 
       filtered_media.each do |ig_item|
         instaitem = Instaitem.new(
@@ -52,11 +52,12 @@ class Api::CollectionsController < ApplicationController
     resp = @collection.fetchMorePhotos
     @collection.update(next_max_tag_id: resp['pagination']['next_max_tag_id'])
 
-    filtered_media = resp['data'].select do |resp_item|
-      # convert ig created_time's unix format to datetime
-      DateTime.strptime(resp_item['caption']['created_time'], '%s')
-              .between?(@collection.start_date, @collection.end_date)
-    end
+    # filtered_media = resp['data'].select do |resp_item|
+    #   # convert ig created_time's unix format to datetime
+    #   DateTime.strptime(resp_item['caption']['created_time'], '%s')
+    #           .between?(@collection.start_date, @collection.end_date)
+    # end
+    filtered_media = resp['data']
 
     filtered_media.map do |ig_item|
       instaitem = Instaitem.new(

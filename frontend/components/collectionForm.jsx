@@ -1,4 +1,5 @@
 var React = require('react');
+var ReactDOM = require('react-dom');
 var LinkedStateMixin = require('react-addons-linked-state-mixin');
 var History = require('react-router').History;
 
@@ -46,6 +47,7 @@ var collectionForm = React.createClass({
           <label htmlFor="collection_end_date">End Date</label>
             <br />
           <input
+            ref='end_date'
             type="datetime-local"
             valueLink={this.linkState("end_date")}
             id="collection_end_date" />
